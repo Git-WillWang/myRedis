@@ -1,0 +1,11 @@
+﻿  ziplist.c
+c:\users\will\documents\visual studio 2015\projects\redis\redis\ziplist.c(6): fatal error C1083: Cannot open include file: 'zmalloc.h': No such file or directory
+  sds.c
+c:\users\will\documents\visual studio 2015\projects\redis\redis\sds.h(62): fatal error C1020: unexpected #endif
+  redis.c
+  intset.c
+c:\users\will\documents\visual studio 2015\projects\redis\redis\intset.c(5): fatal error C1083: Cannot open include file: 'zmalloc.h': No such file or directory
+  endianconv.c
+  adlist.c
+c:\users\will\documents\visual studio 2015\projects\redis\redis\adlist.c(3): fatal error C1083: Cannot open include file: 'zmalloc.h': No such file or directory
+  Generating Code...
