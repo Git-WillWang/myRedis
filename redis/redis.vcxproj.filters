@@ -36,6 +36,9 @@
     <ClInclude Include="ziplist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="zmalloc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="sds.c">
@@ -54,6 +57,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ziplist.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zmalloc.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

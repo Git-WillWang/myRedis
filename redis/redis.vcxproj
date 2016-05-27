@@ -71,6 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\Will\Documents\myRedis\pthreads-w32-2-9-1-release\Pre-built.2\include;</IncludePath>
+    <LibraryPath>C:\Users\Will\Documents\myRedis\pthreads-w32-2-9-1-release\Pre-built.2\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -93,6 +95,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>pthreadVC2.lib;pthreadVCE2.lib;pthreadVSE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,6 +156,7 @@
     <ClInclude Include="redis.h" />
     <ClInclude Include="sds.h" />
     <ClInclude Include="ziplist.h" />
+    <ClInclude Include="zmalloc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adlist.c" />
@@ -161,6 +165,7 @@
     <ClCompile Include="redis.c" />
     <ClCompile Include="sds.c" />
     <ClCompile Include="ziplist.c" />
+    <ClCompile Include="zmalloc.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
