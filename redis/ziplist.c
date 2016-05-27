@@ -46,7 +46,7 @@
 
 #define ZIP_IS_STR(enc) (((enc)& ZIP_STR_MASK)<ZIP_STR_MASK)
 
-#define ZIPLIST_BYTES(zl) (*((uint32_t*)(z1)))
+#define ZIPLIST_BYTES(zl) (*((uint32_t*)(zl)))
 
 #define ZIPLIST_TAIL_OFFSET(zl) (*((uint32_t*)(zl) + sizeof(uint32_t)))
 
@@ -130,19 +130,19 @@ static unsigned int zipEncodeLength(unsigned char* p, unsigned char encoding,
 	memcpy(p, buf, len);
 	return len;
 }
-
-#define ZIP_DECODE_LENGTH(ptr,encoding,lensize,len) do{ \
+//反斜线后不能有空格
+#define ZIP_DECODE_LENGTH(ptr,encoding,lensize,len) do{\
 	ZIP_ENTRY_ENCODING((ptr), (encoding));\
 	if ((encoding) < ZIP_STR_MASK) { \
 		if ((encoding) == ZIP_STR_06B) { \
-			(lensize) = 1; \ 
+			(lensize) = 1; \
 			(len) = (ptr)[0] & 0x3f; \
-		}else if((encoding)==ZIP_STR_14B){ \ 
-			(lensize) = 2; \ 
-			(len) = (((ptr)[0] & 0x3f) << 8) | (ptr)[1]; \ 
+		}else if((encoding)==ZIP_STR_14B){ \
+			(lensize) = 2; \
+			(len) = (((ptr)[0] & 0x3f) << 8) | (ptr)[1]; \
 		} else if (encoding == ZIP_STR_32B) { \
 			(lensize) = 5; \
-			(len) = ((ptr)[1] << 24) | ((ptr)[2] << 16) | ((prt)[3] << 8) | ((ptr)[4]); \
+			(len) = ((ptr)[1] << 24) | ((ptr)[2] << 16) | ((ptr)[3] << 8) | ((ptr)[4]); \
 		} else { \
 			assert(NULL); \
 		} \
@@ -195,7 +195,7 @@ static void zipPrevEncodeLengthForceLarge(unsigned char *p, unsigned int len) {
 		memcpy(&(prevlen), ((char*)(ptr)) + 1, 4);\
 		memrev32ifbe(&prevlen);\
 	}\
-} while (0);
+}while (0);
 
 static int zipPrevLenByteDiff(unsigned char *p, unsigned int len) {
 	unsigned int prevlensize;
@@ -210,10 +210,10 @@ static unsigned int zipRawEntryLength(unsigned char *p) {
 	return prevlensize + lensize + len;
 }
 
-static int zipTryEncoding(unsigned char *entry, unsigned int entrylen, long long *v, unsigned char *encoding) {
+static int zipTryEncoding(unsigned char *entry, unsigned int entryLen, long long *v, unsigned char *encoding) {
 	long long value;
-	if (entryLen >= 32 || netrylen == 0) return 0;
-	if (string2ll((char*)entry, entrylen, &value)) {
+	if (entryLen >= 32 || entryLen == 0) return 0;
+	if (string2ll((char*)entry, entryLen, &value)) {
 		if (value >= 0 && value <= 12) {
 			*encoding = ZIP_INT_IMM_MIN + value;
 		}
@@ -252,7 +252,7 @@ static void zipSaveInteger(unsigned char *p, int64_t value, unsigned char encodi
 	}else if(encoding == ZIP_INT_24B){
 		i32 = value << 8;
 		memrev32ifbe(&i32);
-		memcpy(p, (uint8_t*)&i32) + 1, sizeof(i32) - sizeof(uint8_t));
+		memcpy(p, ((uint8_t*)&i32) + 1, sizeof(i32) - sizeof(uint8_t));
 	}
 	else if (encoding == ZIP_INT_64B) {
 		i64 = value;
@@ -318,6 +318,24 @@ unsigned char *ziplistNew(void) {
 	ZIPLIST_TAIL_OFFSET(zl) = intrev32ifbe(ZIPLIST_HEADER_SIZE);
 	zl[bytes - 1] = ZIP_END;
 	return zl;
+}
+
+static unsigned char *ziplistResize(unsigned char *zl, unsigned int len) {
+	zl = zrealloc(zl, len);
+	ZIPLIST_BYTES(zl) = intrev32ifbe(len);
+	zl[len - 1] = ZIP_END;
+	return zl;
+}
+
+static unsigned char *__ziplistCascadeUpdate(unsigned char *zl, unsigned char *p) {
+	size_t curlen = intrev32ifbe(ZIPLIST_BYTES(zl)), rawlen, rawlensize;
+	size_t offset, noffset, extra;
+	unsigned char *np;
+	zlentry cur, next;
+
+	while (p[0] != ZIP_END) {
+
+	}
 }
 
 
