@@ -1,5 +1,12 @@
 #pragma once
 #include "sds.h"
+
+#define REDIS_STRING 0
+#define REDIS_LIST 1
+#define REDIS_SET 2
+#define REDIS_ZSET 3
+#define REDIS_HASH 4
+
 typedef struct zskiplistNode {
 	robj *obj;
 	double score;
