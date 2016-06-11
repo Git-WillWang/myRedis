@@ -150,20 +150,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="adlist.h" />
+    <ClInclude Include="ae.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="dict.h" />
     <ClInclude Include="endianconv.h" />
+    <ClInclude Include="fmacros.h" />
     <ClInclude Include="intset.h" />
     <ClInclude Include="redis.h" />
     <ClInclude Include="sds.h" />
+    <ClInclude Include="util.h" />
+    <ClInclude Include="version.h" />
     <ClInclude Include="ziplist.h" />
     <ClInclude Include="zmalloc.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="adlist.c" />
+    <ClCompile Include="ae.c" />
+    <ClCompile Include="dict.c" />
     <ClCompile Include="endianconv.c" />
     <ClCompile Include="intset.c" />
     <ClCompile Include="redis.c" />
     <ClCompile Include="sds.c" />
+    <ClCompile Include="t_zset.c" />
+    <ClCompile Include="util.c" />
     <ClCompile Include="ziplist.c" />
     <ClCompile Include="zmalloc.c" />
   </ItemGroup>
